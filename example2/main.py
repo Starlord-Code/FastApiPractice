@@ -11,12 +11,21 @@ class ExpressionProxyWrapper(ExpressionProxy):
     def __get_pydantic_core_schema__(cls, handler):
         return handler.generate_schema(cls)
 
-redis = get_redis_connection(
-    host = "redis-11015.c321.us-east-1-2.ec2.redns.redis-cloud.com",
-    port = 11015,
-    password = "ZZqWhgxwJDmnQCiECyyi0L4pgbdr345y",
-    decode_responses = True 
-)
+# redis = get_redis_connection(
+#     host = "redis-11015.c321.us-east-1-2.ec2.redns.redis-cloud.com",
+#     port = 11015,
+#     password = "ZZqWhgxwJDmnQCiECyyi0L4pgbdr345y",
+#     decode_responses = True 
+# )
+
+import redis
+
+r = redis.Redis(
+  host='redis-11015.c321.us-east-1-2.ec2.redns.redis-cloud.com',
+  port=11015,
+  password='ZZqWhgxwJDmnQCiECyyi0L4pgbdr345y')
+
+
 
 
 app.add_middleware(
@@ -36,7 +45,7 @@ class Product(HashModel):
     quantity: int
 
     class Meta: 
-        database= redis
+        database= r
 
     class Config:
         arbitrary_types_allowed = True  
