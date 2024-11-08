@@ -36,7 +36,7 @@ async def update_item(
 #mutliple body parameter 
 @app.put("/material/{material_id}")
 async def update_item(
-    material_id: int, item: Item, user: User, importance: Annotated[int, Body()]
+    material_id: int, item: Item, user: User, importance: int
 ):
     results = {"material_id": material_id, "item": item, "user": user, "importance": importance}
     return results
@@ -47,7 +47,8 @@ async def update_item(
 @app.put("/packages/{package_id}")
 async def update_package(
     package_id: int,
-    item: Annotated[Item, Body(embed=True)]
+    item: Annotated[Item, Body(embed=True)],
+    q: str | None = None
 ):
     result = {"package_id": package_id, "item": item}
     return result 
